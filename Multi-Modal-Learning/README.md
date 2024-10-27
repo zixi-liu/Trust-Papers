@@ -1,1 +1,88 @@
+## 综述
 
+- [闲话NLP：文本表征的半世今生](https://zhuanlan.zhihu.com/p/473195206)
+  - 如何对文本进行表征。
+    - 传统方法：BOW，TF-IDF
+    - Word Embedding Based (CBOW/Skip-gram, Negative Sampling/Hierarchical Softmax)
+    - Word Embedding + Deep Network: 基本思路为通过不同大小的卷积窗口，对Word Embedding矩阵进卷积计算，每个大小的卷积窗口又有若干通道（Filter/Channel），由此可以得到若干表示向量，经过Pooling 和拼接操作，可以得到整个文本的表征，进而送给下游具体任务。
+    - 上下文Word Embedding+预训练
+    - 预训练+微调架构
+    - BERT
+      - Masked Language Models任务，使模型在预训练阶段可以学习到深度的双向表征。
+      - 第一个取得巨大成功的微调方案。
+      - 多层Self-Attention网络结构。
+  - 对文本表征后，如何设计模型结构实现特定任务目标。
+- [一文看完多模态：从视觉表征到多模态大模型](https://zhuanlan.zhihu.com/p/684472814?utm_psn=1834053277274218496)
+  - 视觉表征
+    - 分为两个部分问题，一是如何合理建模视觉输入特征，二是如何通过预训练手段进行充分学习表征。
+    - CNN
+      - 局部性、二维邻域结构和平移不变性
+        - **局部感知性**：卷积层通过卷积操作和参数共享，能够高效地提取输入图像的局部特征。这种局部感知性使得CNN能够捕捉图像中的局部结构，例如边缘、纹理等，从而更好地表征图像。
+        - **层级结构**：CNN的层级结构包括卷积层、激活函数、池化层和全连接层。这种层级结构使得CNN能够逐层提取和组合特征，从低级到高级，形成更复杂的视觉表征。
+        - **参数共享**：卷积层中的参数共享使得CNN的训练更加高效。相同的卷积核在不同位置对图像进行卷积操作，共享参数减少了模型的复杂度，同时也增强了模型的泛化能力。
+        - **空间不变性**：卷积操作具有平移不变性，即无论图像中的物体在图像中的位置如何变化，卷积核都能检测到相应的特征，这对于图像分类、目标检测和图像分割等计算机视觉任务非常重要。
+      - 梯度消失和梯度爆炸的问题的解决方案
+         - ResNet: 将神经网络某些层跳过下一层神经元的连接，隔层相连，弱化每层之间的强联系。
+      - 通常是先用“海量”的数据让模型学到通用的视觉表征，再进行下游具体任务数据的学习，也就是预训练+微调的范式。
+      - 卷积视觉预训练
+      - 早期多模态融合与预训练（视觉特征提取模块，文本特征提取模块Token Embedding，模态融合模块）
+         - 一种是双塔结构，多模态分别表征，通过对比学习机制实现视觉和文本在同一空间中的距离度量。
+         - 另一种是视觉表征和文本表征通过交互型网络结构融合成多模态表征，进而完成下游任务应用。
+         - **模态融合模块**： 使用Transformer网络（特指Transformer Encoder）作为Modality Interaction模块把视觉和自然语言进行特征融合，并通过大规模预训练来学习得到多模态表征。
+         - 如何对视觉特征进行有效编码，得到和文本一样的Token Embedding序列作为模型输入
+           - Region Feature Base： 先通过基于CNN的目标检测模型，识别图像中的关键物体区域集合（ROI，Region Of Interest），并提取区域的表征向量，作为Transformer模型的视觉输入Embedding序列。*这么做的动机是，每个ROI区域，都有明确的语义表达（人、建筑、物品等），方便后续和文本特征的对齐。*
+           - Grid Feature Base： 区域特征方法虽然看上去合理，但是依赖前置的目标检测模型，整体链路较重。因此也有工作探索，不经过区域检测，直接使用CNN网络提取深层的像素特征作为交互模型输入。
+         - LXMERT
+           - 两路深层表征输入结构： 图像经过目标检测模型得到区域块的特征序列，又经过Transformer做进一步编码区域块之间的关系（Object-Relationship Encoder）；文本侧通过BERT结构得到文本的特征序列（Language Encoder），最后两者使用深层Transformer结构做交叉Attention，最后进行多任务的预训练。
+         - VL-BERT
+           - VL-BERT属于单路输入模式，视觉特征在经过目标检测模型进行Region特征提取后，直接和文本Embedding一起拼接输入到Transformer网络中进行多模态的交叉Attention。
+           - VL-BERT设计了两个预训练任务：带视觉特征的掩码语言模型学习（Masked Language Modeling with Visual Clues）、带文本特征的视觉Region分类（Masked RoI Classification with Linguistic Clues）。
+         - UNITER
+         - Pixel-BERT：减少了目标检测区域框标注的成本，同时缓解了视觉语义label与文本语义的不均衡问题。
+           - Pixel-BERT使用随机像素采样机制来增强视觉表示的鲁棒性，并使用MLM和ITM作为预训练任务进行预训练。
+    - Vision Transformer
+       - Transformer 中的Self-Attention层则是全局的。
+       - VIT：Transformer视觉表征
+          - VIT将输入图片平铺成2D的Patch序列（16x16），并通过线性投影层将Patch转化成固定长度的特征向量序列，对应自然语言处理中的词向量输入。
+          - 同时，每个Patch可以有自己的位置序号，同样通过一个Embedding层对应到位置向量。最终Patch向量序列和视觉位置向量相加作为Transfomer Encoder的模型输入，这点与BERT模型类似。
+          - VIT成功的基础在于*大量的数据*做预训练。
+          - 如何更加有效的对VIT结构的网络进行预训练。
+             - MAE：激进的Mask自监督预训练
+               - 通过75%的高掩码率来对图像添加噪音，这样图像便很难通过周围的像素来对被掩码的像素进行重建，从而使编码器去学习图像中的语义信息。预训练之后，解码器被丢弃，编码器可以应用于未掩码的图像来进行识别任务。
+               - 相对于自然语言的自监督训练，MAE使用了更大的掩码比例。这么做动机是考虑自然语言和视觉特征的信息密度不同，简单来说：文本数据是经过人类高度抽象之后的一种信号，信息是密集的，可以仅仅预测文本中的少量被掩码掉的单词就能很好的捕捉文本的语义特征。而图像数据是一个信息密度非常小的矩阵，包含着大量的冗余信息，像素和它周围的像素存在较大的相似性，恢复被掩码的像素并不需要太多的语义信息。
+        - BEIT：视觉“分词”表征预训练
+            - BEIT通过辅助网络模块先对视觉Patch进行Tokenizer，得到整张图各部分的视觉Token ID。然后将视觉Patch视为自然语言中的单词进行掩码预测，完成预训练流程。
+            - 在预训练之前，BEIT先通过一个离散自回归编码器（ discrete Variational AutoEncoder，dVAE）学习了一个“图像分词”器，最终可以将图像编码成离散的视觉Token集合。
+  - 视觉与自然语言的对齐（Visul Language Alignment）或融合
+    - 模态对齐是处理多模态问题的基础
+    - CLIP: CLIP强调强大的通用性和Zero-Shot能力
+       - CLIP的核心思路是通过对比学习的方法进行视觉和自然语言表征的对齐。
+       - CLIP首先分别对文本和图像进行特征抽取，文本的Encoder为预训练BERT，视觉侧的Encoder可以使用传统的CNN模型，也可是VIT系列模型。得到图文表征向量后，在对特征进行标准化（Normalize）后计算Batch内图文Pair对之间的余弦距离，通过Triple Loss或InfoNCELoss等目标函数拉近正样本对之间的距离，同时使负样本对的距离拉远。
+       - 经过大量的图文Pair对进行预训练后，我们可以得到在同一表征空间下的文本Encoder和图像Encoder。
+       - 下游应用通常也是两种方式，一是在下游任务上对模型进行微调，适应定制的图文匹配任务，或者仅使用文本或图像Encoder做单模态任务；另一种使用方式是直接使用预训练的图文表征Zero-Shot方式完成下游任务。
+    - VILT
+       - 通过深层的Transformer编码，文本与视觉的模态得到了充分的融合。
+       - ViLT使用常用的ITM（Image Text Matching）和MLM（Masked Language Modeling)作为预训练目标。
+       - ViLT之后，多模态预训练的一个较为明显的趋势，是进一步提升模态对齐与融合的效果以及模型结构的通用性，使用统一模型视角进行跨模态对齐和融合。
+    - ALBEF（Align before Fuse）
+    - BLIP（Bootstrapping Language-Image Pre-training）
+- [多模态对齐方法小记:from CLIP to CogVLM](https://zhuanlan.zhihu.com/p/688695091)
+   - 为什么需要模态对齐
+     - 把embedding后的图像转化到和文字embedding相同的分布空间，就能让我们的自然语言模型能够处理图像。
+       - 实现多模态对齐，而又不损失模型的原本性能。同时调整两种预训练模型的权重和embedding来实现模态对齐的时候，实际上是改变了预训练任务时的数据分布的，就是说"图片-文本对"的向量空间和预训练时的”文本“向量空间分布是不同的，预训练大模型只是学到了纯粹文本的分布，但没有学到”图片-文本“的分布，这会造成预训练任务的性能下降甚至是灾难性遗忘。
+   - CLIP
+     - CLIP选择直接先从wiki上爬取出现次数超过100的词汇，再用这些词汇构成query,去搜索图像，最后构成总计400million的image-query对。
+     - 这种构建方式相较于ImageNet的单标签来讲，模型能够捕捉到图片中的多种语义，大大提升了泛化性。哪怕训练时没有见过某个种类，也能又较好的效果。
+     - 如果用预训练好的模型直接去调整模型参数来做对齐，会有很大的数据分布偏移，使模型丧失原有性能。
+     - CLIP能从头开始训练Text Encoder和Image Encoder，其中前者为GPT-2架构，text的输出feature为语句末尾的特殊token[EOS]记作T，后者为ResNet或者ViT,输出为开头的特殊token [CLS]，记作I。
+     - **Training**
+       - Loss：训练过程采用了Image-Text Contrastive损失。对比I和T的相似度，既要横向比较固定一个I,哪个T是最相似的。也要纵向比较，固定一个T，哪个I是最相似的。最大化正确I-T对的相似度，减少非匹配对的相似度，从而实现模态对齐。
+   - ALBEF
+     - image encoder是基于imageNet-1k训练的vit
+     - text encoder 和 multimodal encoder是来自于bert-base,从中间切开得来的并初始化的，但是multimodal encoder的cross attention需要自己初始化。
+     - Loss
+       - ITC
+       - ITM(Image-Text Matching)
+       - MLM(Mask Language Modeling)
+       - Momentum distillation
+- [万字长文总结多模态大模型最新进展（Video篇）](https://zhuanlan.zhihu.com/p/704246896)
