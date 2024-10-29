@@ -1,5 +1,12 @@
 
 [一文彻底搞懂 Bert](https://zhuanlan.zhihu.com/p/694502940)
+-  Pre-training： 存在通用的语言模型，先用文章预训练通用模型，然后再根据具体应用，用 supervised 训练数据，精加工（fine tuning）模型，使之适用于具体应用。
+-  Deep Bidirectional Transformers 模型
+-  论文的主要贡献
+   - 证明了双向预训练对语言表示的重要性。与之前使用的单向语言模型进行预训练不同，BERT使用遮蔽语言模型来实现预训练的深度双向表示。
+   - 预先训练的表示免去了许多工程任务需要针对特定任务修改体系架构的需求。
+- 模型
+   - multi-layer bidirectional Transformer编码器
 
 [如何最简单、通俗地理解Transformer？](https://www.zhihu.com/question/445556653/answer/3254012065)
 - Transformer引入的自注意力机制能够有效捕捉序列信息中长距离依赖关系，相比于以往的RNNs，它在处理长序列时的表现更好。
@@ -54,4 +61,8 @@
     - 在 Transformer 的 Encoder 端，输入序列（如句子的词）会通过多个编码器层处理，每层包含多头自注意力机制和前馈网络，最后生成每个输入位置的上下文表示。
     - Encoder 的最终输出包含了序列中每个位置的全局信息（即每个词及其与其他词的关系），构成了一组上下文表示向量，作为 Decoder 的输入。
   - Decoder 利用 Encoder-Decoder Attention 获取 Encoder 信息
-  
+
+[NLP关键词提取方法总结及实现](https://blog.csdn.net/asialee_bird/article/details/96454544)
+- 基于统计特征的关键词提取（TF-IDF）
+- 基于词图模型的关键词提取（TextRank）
+- 基于主题模型的关键词提取（LDA）
