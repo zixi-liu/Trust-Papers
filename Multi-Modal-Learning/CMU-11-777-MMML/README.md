@@ -1,4 +1,5 @@
 [Foundations & Trends in Multimodal Machine Learning: Principles, Challenges, and Open Questions](https://arxiv.org/pdf/2209.03430)
+
 ## Introduction
 
 #### Core multimodal technical challenges
@@ -49,3 +50,22 @@ Transfer knowledge between modalities, usually to help the target modality which
 
 **Challenge 6. Quantification**
 
+## Unimodal Representations
+
+## Multimodal Representation Fusion
+
+**Cross-modal Interactions**
+- Interactions happen during inference!
+  - Representation fusion
+  - Prediction task
+  - Modality translation
+- Interactions: How multimodal information changes when modalities are combined for a response.
+- Taxonomy of Interaction Responses
+  - Redundancy
+    - Equivalence
+    - Enhancement
+  - Nonredundancy
+    - Independence
+    - Dominance
+    - Modulation
+    - Emergence
