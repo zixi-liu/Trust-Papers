@@ -69,3 +69,62 @@ Transfer knowledge between modalities, usually to help the target modality which
     - Dominance
     - Modulation
     - Emergence
+
+#### Sub-Challenge 1a: Representation Fusion
+
+Learn a joint representation that models cross-modal interactions between individual elements of different modalities
+- Basic fusion (homogeneous) - pre-trained encoders
+- Raw-modality fusion (heterogeneous)
+
+**Early and Late Fusion**
+
+**Basic Concepts for Representation Fusion (Basic Fusion)**
+- univariate case
+  - ![image](https://github.com/user-attachments/assets/ab5dc0d0-8490-41fb-a2ed-c857c2378e95)
+- Tensor Fusion
+- Low-rank Fusion
+- Gated Fusion
+  - ![image](https://github.com/user-attachments/assets/31e40a8a-f1c2-4b77-9c59-45785b8f7d2d)
+  - ga and gb can be seen as attention functions
+- Modality-shifting Fusion
+- Mixture of Fusions (gating can be soft or hard attention)
+- Nonlinear Fusion
+
+**Fusion with Heterogeneous Modalities**
+- Multimodal Masked Autoencoder
+- Dynamic Early Fusion
+  - Define basic representation building blocks
+  - Define basic fusion building blocks
+  - Automatically search for composition using neural architecture search
+- Heterogeneity-aware Fusion
+
+**Improving Optimization**
+- sometimes multimodal doesn’t help
+  - Multimodal networks are more prone to overfitting due to increased complexity.
+  - Different modalities overfit and generalize at different rates.
+
+**Heterogeneity in Noise: Studying Robustness**
+- Noise within Modality
+- Missing Modalities
+- Strong tradeoffs between performance and robustness
+
+Several approaches towards more robust models
+- Robust data + training
+- Infer missing modalities
+
+![image](https://github.com/user-attachments/assets/0e63d684-c191-46c5-bf60-9dac08d1a9a6)
+
+## Multimodal Alignment
+
+**Heterogenous, connected and interacting data**
+- Connections
+  - knowledge of one modality provides information about the other modality
+  - connection types
+    - co-occurrence
+    - correlation
+    - causality
+- Coordinated Representations - Example: CLIP
+
+## Other Resources
+
+[该怎样去学习多模态（表征、翻译、对齐、融合等）？](https://www.zhihu.com/question/638854224/answer/3408335048)
