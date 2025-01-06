@@ -123,7 +123,27 @@ Several approaches towards more robust models
     - co-occurrence
     - correlation
     - causality
-- Coordinated Representations - Example: CLIP
+- Coordinated Representations - Example: CLIP focuses on shared connections
+- Modality Interactions
+  - Interaction with a response (inference)
+  - Interactions taxonomy:
+    - Level 1: Responses and Input Modalities
+      - Co-occurrence
+      - Redundancy
+      - Dominance
+      - Emergence
+    - Level 2: Interactions - Internal Mechanics
+      - Additive
+      - Multiplicative
+      - Polynomial
+      - Nonlinear
+    - Level 3: Contextualized Interactions
+      - Temporal
+      - Hierarchy
+      - Multimodal
+  - Responses and Input Modalities
+    - Information theory as a framework
+      - 
 
 ## Other Resources
 
