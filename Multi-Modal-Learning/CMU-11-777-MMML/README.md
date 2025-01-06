@@ -143,8 +143,38 @@ Several approaches towards more robust models
       - Multimodal
   - Responses and Input Modalities
     - Information theory as a framework
-      - 
+      - Mutual information means co-occurrence or joint probability
+      - Task-relevant unique information vs. Task-relevant shared information
+
+**Alignment**
+- Identifying and modeling cross-modal interactions (often without labels)
+
+Discrete Alignment
+- i.e. Tokens
+- Discrete elements and connections
+- Local vs Global
+- Directed vs Undirected
+- Language Grounding
+  - Tying language to non-linguistic elements
+  - Local alignment - coordinated representation
+    - Supervision: paired data with contrastive learning/using similarity function
+  - Directed alignment
+    - Soft attention
+    - Hard attention
+  - Gating -> Dynamically changing weight of model
+    - Attention gates
+  - Global Alignment
+    - Jointly optimize representation + global alignment
+  - Optimal Transport
+
+Continuous Alignment
+- i.e. sensor data
+- Segmentation and continuous warping
+
 
 ## Other Resources
 
 [该怎样去学习多模态（表征、翻译、对齐、融合等）？](https://www.zhihu.com/question/638854224/answer/3408335048)
+
+**Mutual Information**
+- [互信息(Mutual Information)浅尝辄止（一）：基础概念](https://zhuanlan.zhihu.com/p/240676850)
