@@ -21,11 +21,13 @@
 - Deterministic: a policy at a given state will always return the same action.
 - Stochastic: outputs a probability distribution over actions.
 
-**Value-based methods**
+**Value-based Methods**
 - Learn a value function that maps a state to the expected value of being at that state.
 - The value of a state is the expected discounted return the agent can get if it starts in that state, and then acts according to our policy.
 
-**Two types of value-based methods**
+**Two types of Value-based Methods**
 - The goal of an RL agent is to have an optimal policy π*.
   - use an Epsilon-Greedy Policy that handles the exploration/exploitation trade-off
 - The state-value function
+
+
