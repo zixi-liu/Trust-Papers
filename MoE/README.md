@@ -10,5 +10,6 @@
   - MoE与Transformer
     - ST-MoE（Stable and Transferable）
 
+## [月球大叔EP07]
 
-
+[[FIXME][EP07] 聊聊MoE + 闲谈学术品位](https://www.youtube.com/watch?v=mHUBwzlsWjg)
