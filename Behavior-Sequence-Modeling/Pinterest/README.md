@@ -2,7 +2,8 @@
 
 Sequence Modeling for User Representation @ Pinterest
 
-![image.png](attachment:7c761ecb-6cc8-443d-9bf3-86fef12019f3:image.png)
+![image](https://github.com/user-attachments/assets/a6f62776-fb26-44c0-b799-84c75374d0d5)
+
 
 https://newsletter.theaiedge.io/p/the-aiedge-how-pinterest-uses-transformers
 
@@ -50,7 +51,7 @@ PinnerFormer 通过新的损失函数(How?)缩小了“实时模型”与“日�
 
 - **Pins**：规模达数十亿，每个 Pin 由 PinSage 生成 256 维向量，融合视觉、文本与交互信息。
 - **用户**：5 亿 + 月活。每位用户记录其按时间排序的历史 Pin 交互序列，动作包括保存、点击、放大查看、评论等。为控制计算量，仅取最近 M 条行为。
-- **Action Sequence：**使用对应 Pin 的 PinSage embedding并附带action metadata。
+- **Action Sequence**使用对应 Pin 的 PinSage embedding并附带action metadata。
 
 **学习目标/Learning Goals**
 
@@ -100,7 +101,8 @@ PinnerFormer 通过新的损失函数(How?)缩小了“实时模型”与“日�
 
 PinnerFormer 选择双塔架构
 
-![image.png](attachment:c20cbe08-9db6-4255-a1bb-5ffdecd69f49:image.png)
+![image](https://github.com/user-attachments/assets/12258626-3892-4c0f-be33-333afe8b03f8)
+
 
 - 用户塔（User Tower）
     - Transformer + Pre-Norm；行为特征拼接后 → 位置编码 → MHSA/FFN → MLP → L2 归一化
@@ -125,12 +127,13 @@ PinnerFormer 选择双塔架构
         - 仅对一个正样本pi 和N 个负样本计算 softmax。
         - 若负样本并非均匀采样，需要 **log Q 校正。**
             - 𝑄𝑖(𝑣) = 𝑃 (Pin 𝑣 in batch | User 𝑈𝑖 in batch)
+![image](https://github.com/user-attachments/assets/f4627b86-9bc4-479a-a681-db31cb7c04cc)
 
-![image.png](attachment:e8e7f901-a724-4c89-bfac-e13a0a938687:image.png)
 
 **3.4 Training Objective**
 
-![image.png](attachment:10f5c3f2-c1b6-43d2-93e6-b70ba21066d7:image.png)
+![image](https://github.com/user-attachments/assets/e215bc90-c1d9-4775-8517-e51ad5608705)
+
 
 Four training objectives considered:
 
@@ -154,7 +157,8 @@ Four training objectives considered:
 
 **3.6 Model Serving**
 
-![image.png](attachment:6d3d3a86-9ece-4b0b-a90e-1597996142be:image.png)
+![image](https://github.com/user-attachments/assets/5069248c-07fd-4858-a55f-4bb986986fb6)
+
 
 **日更增量**
 
